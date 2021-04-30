@@ -40,9 +40,13 @@ function parseOptions(params) {
 };
 
 async function fromHtmlFile(file, body) {
-    console.log('Converting ' + file.originalname + ' to pdf');
 
     try {
+        if (!file) {
+            throw {'error' : 'HTML file not found'}
+        }
+        console.log('Converting ' + file.originalname + ' to pdf');
+
         const options = parseOptions(body);
 
         const html = Buffer.from(file.buffer).toString(body.encoding);
@@ -54,7 +58,9 @@ async function fromHtmlFile(file, body) {
         console.info(file.originalname + ' converted successfully');
         return pdf;
     } catch (e) {
-        throw e;
+        console.error(e);
+
+        throw { 'error' : e};
     }
 };
 
@@ -64,7 +70,7 @@ async function fromHtmlString(body) {
     try {
         const html = body.html;
         if (!html) {
-            throw {'message' : 'HTML text not found'}
+            throw {'error' : 'HTML text not found'}
         }
         const options = parseOptions(body);
 
@@ -76,7 +82,9 @@ async function fromHtmlString(body) {
         console.info('String converted successfully');
         return pdf;
     } catch (e) {
-        throw e;
+        console.error(e);
+
+        throw { 'error' : e};
     }
 };
 
@@ -86,7 +94,7 @@ async function fromUrl(body) {
     try {
         const url = body.url;
         if (!url) {
-            throw {'message' : 'Param URL not found'}
+            throw {'error' : 'Param URL not found'}
         }
 
         const options = parseOptions(body);
@@ -99,7 +107,9 @@ async function fromUrl(body) {
         console.info('URL converted successfully');
         return pdf;
     } catch (e) {
-        throw e;
+        console.error(e);
+
+        throw { 'error' : e};
     }
 };
 
