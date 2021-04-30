@@ -6,7 +6,8 @@ async function startBrowser() {
 
     browser = await puppeteer.launch({
         devtools: false,
-        headless: true
+        headless: true,
+        args: ['--no-sandbox','--disable-setuid-sandbox']
     });
 }
 
