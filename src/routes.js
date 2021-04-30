@@ -6,6 +6,10 @@ const upload = multer();
 const pdf = require('./pdf');
 pdf.startBrowser();
 
+routes.get("/", upload.none(), (request, response) => {
+    response.status(201).send('Hello world');
+});
+
 routes.post("/convert/fromFile", upload.single('file'), async (request, response) => {
     try {
         const result = await pdf.fromHtmlFile(request.file, request.body);
