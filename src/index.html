@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 25px 25%;
+            line-height: 1.6;
+        }
+
+        section {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .content {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+    </style>
+
+    <title>Convert to PDF options</title>
+</head>
+
+<body>
+    <section id="description">
+        <span class="display-4">Convert to PDF</span>
+        <div class="content">
+            Convert to PDF is a simple API that receive a HTML (file, string or url) and uses Puppeteer headless browser to convert into PDF.
+        </div>
+    </section>
+    <section id="methods">
+        <span class="display-4">Endpoints</span>
+        <div class="content">
+            <code>/convert/fromFile</code>
+            <ul>
+                <li>file: <strong>(Required)</strong> HTML file </li>
+                <li>options: <strong>(Optional)</strong> See <a href="#options"> options</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <code>/convert/fromString</code>
+            <ul>
+                <li>html: <strong>(Required)</strong> HTML string </li>
+                <li>options: <strong>(Optional)</strong> See <a href="#options"> options</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <code>/convert/fromUrl</code>
+            <ul>
+                <li>url: <strong>(Required)</strong> Website url </li>
+                <li>options: <strong>(Optional)</strong> See <a href="#options"> options</a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="options">
+        <div>
+            <span class="display-4">Options </span> <a
+                href="http://https://pptr.dev/#?product=Puppeteer&version=v9.0.0&show=api-pagepdfoptions">[official
+                docs]</a>
+        </div>
+        <div class="content">
+            <ul>
+                <li><code>encoding</code> The file encoding. Default <code>utf-8</code></li>
+                <li><code>mediaType</code> CSS media type. Default <code>print</code></li>
+                <li><code>scale</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                        title="Number">number<external-link-icon></external-link-icon></a>&gt; Scale of the webpage
+                    rendering. Defaults to <code>1</code>. Scale amount must be between 0.1 and 2.</li>
+                <li><code>displayHeaderFooter</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type"
+                        title="Boolean">boolean<external-link-icon></external-link-icon></a>&gt; Display header and
+                    footer. Defaults to <code>false</code>.</li>
+                <li><code>headerTemplate</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>&gt; HTML template for the
+                    print header. Should be valid HTML markup with following classes used to inject printing values
+                    into
+                    them:
+                    <ul>
+                        <li><code>date</code> formatted print date</li>
+                        <li><code>title</code> document title</li>
+                        <li><code>url</code> document location</li>
+                        <li><code>pageNumber</code> current page number</li>
+                        <li><code>totalPages</code> total pages in the document</li>
+                    </ul>
+                </li>
+                <li><code>footerTemplate</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>&gt; HTML template for the
+                    print footer. Should use the same format as the <code>headerTemplate</code>.</li>
+                <li><code>printBackground</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type"
+                        title="Boolean">boolean<external-link-icon></external-link-icon></a>&gt; Print background
+                    graphics. Defaults to <code>false</code>.</li>
+                <li><code>landscape</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type"
+                        title="Boolean">boolean<external-link-icon></external-link-icon></a>&gt; Paper orientation.
+                    Defaults to <code>false</code>.</li>
+                <li><code>pageRanges</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>&gt; Paper ranges to
+                    print,
+                    e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.</li>
+                <li><code>format</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>&gt; Paper format. If set,
+                    takes priority over <code>width</code> or <code>height</code> options. Defaults to 'A4'.
+                </li>
+                <li><code>width</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>|<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                        title="Number">number<external-link-icon></external-link-icon></a>&gt; Paper width, accepts values labeled with units.
+                        <a href="#note-2">See note 2</a>
+                </li>
+                <li><code>height</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                        title="String">string<external-link-icon></external-link-icon></a>|<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                        title="Number">number<external-link-icon></external-link-icon></a>&gt; Paper height, accepts values labeled with units.
+                    <a href="#note-2">See note 2</a>
+                </li>
+                <li><code>margin</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"
+                        title="Object">Object<external-link-icon></external-link-icon></a>&gt; Paper margins, defaults to none.
+                        <a href="#note-2">See note 2</a>
+                    <ul>
+                        <li><code>top</code> &lt;<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                                title="String">string<external-link-icon></external-link-icon></a>|<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                                title="Number">number<external-link-icon></external-link-icon></a>&gt; Top margin,
+                            accepts values labeled with units.</li>
+                        <li><code>right</code> &lt;<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                                title="String">string<external-link-icon></external-link-icon></a>|<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                                title="Number">number<external-link-icon></external-link-icon></a>&gt; Right margin,
+                            accepts values labeled with units.</li>
+                        <li><code>bottom</code> &lt;<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                                title="String">string<external-link-icon></external-link-icon></a>|<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                                title="Number">number<external-link-icon></external-link-icon></a>&gt; Bottom
+                            margin,
+                            accepts values labeled with units.</li>
+                        <li><code>left</code> &lt;<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type"
+                                title="String">string<external-link-icon></external-link-icon></a>|<a
+                                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type"
+                                title="Number">number<external-link-icon></external-link-icon></a>&gt; Left margin,
+                            accepts values labeled with units.</li>
+                    </ul>
+                </li>
+                <li><code>preferCSSPageSize</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type"
+                        title="Boolean">boolean<external-link-icon></external-link-icon></a>&gt; Give any CSS
+                    <code>@page</code> size declared in the page priority over what is declared in
+                    <code>width</code> and <code>height</code> or <code>format</code> options. Defaults to <code>false</code>, which will scale the content to fit the paper size.
+                </li>
+                <li><code>omitBackground</code> &lt;<a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type"
+                        title="Boolean">boolean<external-link-icon></external-link-icon></a>&gt; Hides default white background and allows capturing screenshots with transparency. Defaults to <code>false</code>.
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section id="Returns">
+        <span class="display-4">Return</span>
+        <div class="content">
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"
+                title="Promise">Promise<external-link-icon></external-link-icon></a>&lt;<a
+                href="https://nodejs.org/api/buffer.html#buffer_class_buffer" title="Buffer">Buffer
+                <external-link-icon>
+                </external-link-icon>
+            </a>&gt;&gt; Promise which resolves with PDF buffer.
+        </div>
+    </section>
+    <section id="examples">
+        <span class="display-4">Examples and notes</span>
+
+        <div class="content">
+            <div id="note-1">
+                <p><strong>NOTE</strong> By default, Puppeteer generates a pdf with modified colors for printing. Use the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-print-color-adjust"><code>-webkit-print-color-adjust<external-link-icon></external-link-icon></code></a> property to force rendering of exact colors.</p>
+            </div>
+
+            <div id="note-2">
+                <p><strong>NOTE</strong> The <code>width</code>, <code>height</code>, and <code>margin</code> options accept values labeled with units. Unlabeled values are treated as pixels.</p>
+                <p>A few examples:</p>
+                <ul>
+                    <li><code>width: 100</code> - prints with width set to 100 pixels</li>
+                    <li><code>width: '100px'</code> - prints with width set to 100 pixels</li>
+                    <li><code>width: '10cm'</code> - prints with width set to 10 centimeters.</li>
+                </ul>
+                <p>All possible units are:</p>
+                <ul>
+                    <li><code>px</code> - pixel</li>
+                    <li><code>in</code> - inch</li>
+                    <li><code>cm</code> - centimeter</li>
+                    <li><code>mm</code> - millimeter</li>
+                </ul>
+            </div>
+
+            <div id="note-3">
+                <p><strong>NOTE</strong> The <code>format</code> options are:</p>
+                <ul>
+                    <li><code>Letter</code>: 8.5in x 11in</li>
+                    <li><code>Legal</code>: 8.5in x 14in</li>
+                    <li><code>Tabloid</code>: 11in x 17in</li>
+                    <li><code>Ledger</code>: 17in x 11in</li>
+                    <li><code>A0</code>: 33.1in x 46.8in</li>
+                    <li><code>A1</code>: 23.4in x 33.1in</li>
+                    <li><code>A2</code>: 16.54in x 23.4in</li>
+                    <li><code>A3</code>: 11.7in x 16.54in</li>
+                    <li><code>A4</code>: 8.27in x 11.7in</li>
+                    <li><code>A5</code>: 5.83in x 8.27in</li>
+                    <li><code>A6</code>: 4.13in x 5.83in</li>
+                </ul>
+            </div>
+
+            <div id="note-4">
+                <p><strong>NOTE</strong> <code>headerTemplate</code> and <code>footerTemplate</code> markup have the
+                    following limitations:</p>
+                <ol>
+                    <li>Script tags inside templates are not evaluated.</li>
+                    <li>Page styles are not visible inside templates.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

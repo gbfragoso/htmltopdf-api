@@ -51,16 +51,20 @@ async function fromHtmlFile(file, body) {
 
         const html = Buffer.from(file.buffer).toString(body.encoding);
         const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: "networkidle0" });
+        await page.setContent(html);
+
+        if (options.mediaType !== 'print') {
+            page.emulateMediaType(options.mediaType);
+            delete options.mediaType;
+        }
+
         const pdf = await page.pdf(options);
         await page.close();
 
         console.info(file.originalname + ' converted successfully');
         return pdf;
     } catch (e) {
-        console.error(e);
-
-        throw { 'error' : e};
+        throw { e };
     }
 };
 
@@ -70,21 +74,25 @@ async function fromHtmlString(body) {
     try {
         const html = body.html;
         if (!html) {
-            throw {'error' : 'HTML text not found'}
+            throw {'error' : 'HTML string not found'}
         }
         const options = parseOptions(body);
 
         const page = await browser.newPage();
-        await page.setContent(html, { waitUntil: "networkidle0" });
+        await page.setContent(html);
+
+        if (options.mediaType !== 'print') {
+            page.emulateMediaType(options.mediaType);
+            delete options.mediaType;
+        }
+
         const pdf = await page.pdf(options);
         await page.close();
 
         console.info('String converted successfully');
         return pdf;
     } catch (e) {
-        console.error(e);
-
-        throw { 'error' : e};
+        throw { e };
     }
 };
 
@@ -100,16 +108,14 @@ async function fromUrl(body) {
         const options = parseOptions(body);
 
         const page = await browser.newPage();
-        await page.goto(url, { waitUntil: "networkidle0" });
+        await page.goto(url, { waitUntil: "networkidle2" });
         const pdf = await page.pdf(options);
         await page.close();
 
         console.info('URL converted successfully');
         return pdf;
     } catch (e) {
-        console.error(e);
-
-        throw { 'error' : e};
+        throw { e };
     }
 };
 
