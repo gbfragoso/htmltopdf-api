@@ -17,7 +17,6 @@ function parseOptions(params) {
 
     try {
         console.log('Parsing options');
-        console.log(params);
 
         for (var key in params) {
             if (key !== 'encoding' && key !== 'url' && key !== 'path' && key !== 'html') {
@@ -27,13 +26,15 @@ function parseOptions(params) {
                     options[key] = (params[key] === 'true');
                 } else if (parseInt(params[key])) {
                     options[key] = parseInt(params[key]);
-                } else if (JSON.parse(params[key])) {
+                } else if (isJson(params[key])) {
                     options[key] = JSON.parse(params[key]);
                 } else {
                     options[key] = params[key];
                 }
             }
         }
+        
+        console.log(options);
     } catch (e) {
         const error = serializeError(e);
         delete error.stack;
@@ -63,7 +64,6 @@ async function fromHtmlFile(file, body) {
             page.emulateMediaType(options.mediaType);
             delete options.mediaType;
         }
-        console.log(options);
 
         const pdf = await page.pdf(options);
         await page.close();
@@ -142,5 +142,23 @@ async function fromUrl(body) {
         throw error;
     }
 };
+
+function isJson(item) {
+    item = typeof item !== "string"
+        ? JSON.stringify(item)
+        : item;
+
+    try {
+        item = JSON.parse(item);
+    } catch (e) {
+        return false;
+    }
+
+    if (typeof item === "object" && item !== null) {
+        return true;
+    }
+
+    return false;
+}
 
 module.exports = { startBrowser, fromHtmlFile, fromHtmlString, fromUrl };
