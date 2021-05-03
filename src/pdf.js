@@ -55,7 +55,7 @@ async function fromHtmlFile(file, body) {
 
         const html = Buffer.from(file.buffer).toString(body.encoding);
         const page = await browser.newPage();
-        await page.setContent(html);
+        await page.setContent(html, { waitUntil: "networkidle2" });
 
         if (options.mediaType && options.mediaType !== 'print') {
             console.log('Emulating ' + options.mediaType + " media type");
@@ -88,9 +88,9 @@ async function fromHtmlString(body) {
         const options = parseOptions(body);
 
         const page = await browser.newPage();
-        await page.setContent(html);
+        await page.setContent(html, { waitUntil: "networkidle2" });
 
-        if (options.mediaType !== 'print') {
+        if (options.mediaType && options.mediaType !== 'print') {
             console.log('Emulating ' + options.mediaType + " media type");
             page.emulateMediaType(options.mediaType);
             delete options.mediaType;
@@ -123,7 +123,7 @@ async function fromUrl(body) {
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: "networkidle2" });
 
-        if (options.mediaType !== 'print') {
+        if (options.mediaType && options.mediaType !== 'print') {
             console.log('Emulating ' + options.mediaType + " media type");
             page.emulateMediaType(options.mediaType);
             delete options.mediaType;
