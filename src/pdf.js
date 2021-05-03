@@ -19,7 +19,7 @@ function parseOptions(params) {
         console.log('Parsing options');
 
         for (var key in params) {
-            if (key !== 'encoding' && key !== 'url' && key !== 'path') {
+            if (key !== 'encoding' && key !== 'url' && key !== 'path' && key !== 'html') {
 
                 // Parsing types
                 if (params[key] === 'true' || params[key] === 'false') {
